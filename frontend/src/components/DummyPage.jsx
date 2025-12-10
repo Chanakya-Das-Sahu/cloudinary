@@ -30,7 +30,7 @@ export default function DummyPage({ onUnlock }) {
 
   return (
     <div
-      className="min-h-screen bg-white flex flex-col items-center pt-24 px-4"
+      className="min-h-screen bg-white flex flex-col items-center pt-24 px-4 select-none"
       onMouseDown={handleDown}
       onMouseUp={handleUp}
       onTouchStart={handleDown}
