@@ -2,7 +2,8 @@ import { useState, useRef } from "react";
 
 export default function DummyPage({ onUnlock }) {
   // ---- MORSE UNLOCK LOGIC ----
-  const pattern = [".", "-", ".", "."]; // your unlock sequence
+  const regex = import.meta.env.VITE_REGEX.split(","); // your unlock sequence
+  console.log('regex:', regex);
   const [index, setIndex] = useState(0);
   const pressStart = useRef(null);
 
@@ -14,9 +15,9 @@ export default function DummyPage({ onUnlock }) {
     const ms = Date.now() - pressStart.current;
     const signal = ms < 300 ? "." : "-";
 
-    if (signal === pattern[index]) {
+    if (signal === regex[index]) {
       const next = index + 1;
-      if (next === pattern.length) {
+      if (next === regex.length) {
         onUnlock();
         setIndex(0);
         return;
@@ -47,9 +48,14 @@ export default function DummyPage({ onUnlock }) {
 
         <p className="text-gray-700 leading-relaxed mb-4">
           If this is your site, and you weren’t expecting a 404 for this path, please visit Netlify’s{" "}
-          <a href="#" className="text-blue-600 underline">
-            “page not found” support guide
-          </a>{" "}
+         <p
+//   href="#"
+  className="text-blue-600 underline"
+  onClick={() => window.location.reload()}
+>
+  “page not found” support guide
+</p>
+
           for troubleshooting tips.
         </p>
 
@@ -63,3 +69,6 @@ export default function DummyPage({ onUnlock }) {
     </div>
   );
 }
+
+
+
