@@ -3,7 +3,7 @@ import CloudinaryGallery from "./components/CloudinaryGallery";
 import DummyPage from "./components/DummyPage";
 
 export default function App() {
-  const [unlocked, setUnlocked] = useState(true);
+  const [unlocked, setUnlocked] = useState(false);
 
   return (
     <div className="min-h-screen">
