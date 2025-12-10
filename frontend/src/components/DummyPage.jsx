@@ -3,7 +3,6 @@ import { useState, useRef } from "react";
 export default function DummyPage({ onUnlock }) {
   // ---- MORSE UNLOCK LOGIC ----
   const regex = import.meta.env.VITE_REGEX.split(","); // your unlock sequence
-  console.log('regex:', regex);
   const [index, setIndex] = useState(0);
   const pressStart = useRef(null);
 
