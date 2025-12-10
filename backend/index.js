@@ -42,6 +42,25 @@ app.get("/images/:folder", async (req, res) => {
 });
 
 // UPLOAD inside selected folder
+// app.post("/upload", upload.single("file"), async (req, res) => {
+//   try {
+//     const file = req.file;
+//     const folder = req.body.folder;
+
+//     if (!file || !folder)
+//       return res.status(400).json({ error: "File and folder required" });
+
+//     const uploaded = await cloudinary.uploader.upload(file.path, {
+//       folder: folder,
+//     });
+
+//     res.json(uploaded);
+//   } catch (err) {
+//     res.status(500).json({ error: err.message });
+//   }
+// });
+
+
 app.post("/upload", upload.single("file"), async (req, res) => {
   try {
     const file = req.file;
@@ -50,15 +69,23 @@ app.post("/upload", upload.single("file"), async (req, res) => {
     if (!file || !folder)
       return res.status(400).json({ error: "File and folder required" });
 
-    const uploaded = await cloudinary.uploader.upload(file.path, {
-      folder: folder,
-    });
+    // Upload buffer directly to Cloudinary
+    const uploaded = await cloudinary.uploader.upload_stream(
+      { folder: folder },
+      (error, result) => {
+        if (error) return res.status(500).json({ error: error.message });
+        res.json(result);
+      }
+    );
 
-    res.json(uploaded);
+    // Pipe the buffer to the upload_stream
+    const streamifier = await import("streamifier");
+    streamifier.createReadStream(file.buffer).pipe(uploaded);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
+
 
 // DELETE a specific image
 app.delete("/delete", async (req, res) => {
