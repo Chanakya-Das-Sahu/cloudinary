@@ -73,6 +73,9 @@ app.delete("/delete", async (req, res) => {
   }
 });
 
+app.get("/health", (req, res) => {
+  res.json({ status: "ok", timestamp: new Date() });
+});
 
 
 app.listen(5000, () => console.log("Server running on port 5000"));

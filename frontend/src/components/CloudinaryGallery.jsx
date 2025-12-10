@@ -9,6 +9,7 @@ export default function CloudinaryGallery() {
   const [deleteTarget, setDeleteTarget] = useState(null);
 
   useEffect(() => {
+    console.log('getBasePath', getBasePath());
     fetch(`${getBasePath()}/folders`)
       .then((res) => res.json())
       .then((data) => setFolders(data));
