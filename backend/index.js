@@ -8,7 +8,8 @@ dotenv.config();
 const app = express();
 app.use(cors());
 
-const upload = multer({ dest: "uploads/" });
+const upload = multer({ storage: multer.memoryStorage() });
+
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
